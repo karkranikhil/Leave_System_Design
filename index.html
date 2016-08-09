@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Leave System</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="style.css">
+<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
+
+</head>
+<body>
+
+<div ng-cloak class="container-fluid" ng-app="myApp" ng-controller="myCtrl">
+  <div class="container-fluid">
+        <nav class="navbar custom-navbar navbar-fixed-top">            
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="">Leave System</a>
+                </div>           
+        </nav>
+    </div>
+<div class="container mt-60px">
+    <div class="row">
+        <div class="col-sm-12 col-xs-12">
+            <div class="col-sm-3 col-xs-12">
+                <div class="panel panel-default totalLeave">
+                    <div class="panel-body whiteColor">
+                        <div class="col-sm-12 col-xs-12 pd0 text-center"><i class="fa fa-wpforms cardFont"><span class="ml5">Total Leaves</span></i></div>
+                        <div class="col-sm-12 col-xs-12 pd0 leaveNo">26</div>                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 col-xs-12">
+                <div class="panel panel-default debitLeaves">
+                     <div class="panel-body whiteColor">
+                        <div class="col-sm-12 col-xs-12  pd0 text-center"><i class="fa fa-comments cardFont"><span class="ml5">Debit</span></i></div>
+                        <div class="col-sm-12  col-xs-12 pd0 leaveNo">10</div>                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 col-xs-12">
+                <div class="panel panel-default balanceLeaves">
+                   <div class="panel-body whiteColor">
+                        <div class="col-sm-12  col-xs-12 pd0 text-center"><i class="fa fa-tasks cardFont"><span class="ml5">Balance</span></i></div>
+                        <div class="col-sm-12 col-xs-12 pd0 leaveNo">16</div>                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 col-xs-12">
+                <div class="panel panel-default paternityLeaves">
+                   <div class="panel-body whiteColor">
+                        <div class="col-sm-12 col-xs-12 pd0 text-center"><i class="fa fa-support cardFont"><span class="ml5">Paternity Leaves</span></i></div>
+                        <div class="col-sm-12 col-xs-12 pd0 leaveNo">5</div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="container">
+    <div class="row">
+          <div class="col-sm-3 col-xs-12 pdl-30">
+            <ul class="nav nav-pills nav-stacked custom-nav">
+                <li class="fixedlist"><a class="fixedlist fontSize1-5" href="">As a Employee <span class=" chavronStyle glyphicon glyphicon-chevron-down"></span></a> </li>
+                <li class="active unselectedList" ng-click="activeFunc('Plan')"><a data-toggle="pill" href="#home">Plan/Apply</a><div ng-show="Plan" class="arrow-right applyCaret"></div></li>
+                <li class="unselectedList" ng-click="activeFunc('ChangeApprover')"><a data-toggle="pill" href="#menu1">Change Approver</a><div ng-show="changeApprover" class="arrow-right applyCaret"></div></li>
+                <li class="unselectedList" ng-click="activeFunc('Cancel')"><a data-toggle="pill" href="#menu2">Cancel Approved leaves</a><div ng-show="Cancel" class="arrow-right applyCaret"></div></li>
+                <li class="unselectedList" ng-click="activeFunc('History')"><a data-toggle="pill" href="#menu3">History</a><div ng-show="History" class="arrow-right applyCaret"></div></li>
+                <li class="fixedlist"><a class="fixedlist fontSize1-5" href="">As a approver <span class=" chavronStyle glyphicon glyphicon-chevron-down"></span></a></li>
+                <li class="unselectedList" ng-click="activeFunc('leaveRequests')"><a data-toggle="pill" href="#menu4">Leave Requests <span class="badge">2</span></a><div ng-show="leaveRequests" class="arrow-right applyCaret"></div></li>
+                <li class="unselectedList" ng-click="activeFunc('cancelRequests')"><a data-toggle="pill" href="#menu5">Cancellation Requests <span class="badge">0</span></a><div ng-show="cancelRequests" class="arrow-right applyCaret"></div></li>
+            </ul>
+            </div>
+            <div class="col-sm-9">
+                 <div class="col-sm-12 tabPanel">
+            <div class="tab-content tab-content-style">
+                <div id="home" class="tab-pane fade in active">
+				<div class="alert alert-success" ng-show="msgBox">
+				  <strong>{{msgBoxData}}!</strong>
+				</div>
+                    <form role="form" ng-submit="leaveSubmitFunc(user)">
+                        <div class="form-group col-sm-6">
+                        <label class="control-label" for="email">Category:</label><br>
+                        <label class="radio-inline control-label"><input ng-model="user.category" type="radio" name="optradio"><span>Plan</span></label>
+                        <label class="radio-inline"><input type="radio" ng-model="user.category" name="optradio">Apply</label>
+                        </div>
+                        <div class="form-group col-sm-6">
+                        <label class="control-label" for="sel1">Leave Type:</label>
+                        <select class="form-control" ng-model="user.type" id="sel1">
+                            <option value="Sick">Sick</option>
+                            <option value="Earned">Earned</option>
+                            <option value="Paternity">Paternity</option>
+                            <option value="optional">optional</option>
+                        </select>
+                        </div>
+						<div class="form-group col-sm-6">
+                            <label class="control-label" for="From">From Date:</label>        
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ng-model="user.From" id="fromDate" placeholder="mm/dd/yyyy"/>
+                                    <span class="input-group-addon hidden-xs"  class="fromDate" ><i class="fa fa-calendar"></i></span>
+                                </div>        
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label" for="to">To Date:</label>        
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ng-model="user.To" id="toDate" placeholder="mm/dd/yyyy"/>
+                                    <span class="input-group-addon hidden-xs" class="toDate" ><i class="fa fa-calendar"></i></span>
+                                </div>        
+                        </div>                        
+                        <div class="form-group col-sm-6">
+                            <label class="control-label" for="email">Approver Id:</label>        
+                            <input type="email" id="email" ng-disabled="true" ng-model="user.approverId" placeholder="emailId" class="form-control">
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label" for="reason">Reason:</label>        
+                            <textarea class="form-control" ng-model="user.Reason" rows="4" id="Reason"></textarea>
+                        </div>
+                        <div class="form-group col-sm-6" style="margin-top: -48px;">
+                            <div class="col-sm-6">
+                                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-warning btn-block">Reset</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>   
+<!--Approver change-->				
+                <div id="menu1" class="tab-pane fade">
+				<div class="col-sm-12">
+                <form  role="form" class="form-horizontal" ng-submit="changeApproverIdFunc(newapproverId)">
+					<div class="form-group">
+						<label class="control-label col-sm-4"  for="email">Current ApproverId:</label>
+						<div class="col-sm-8">
+						  <input type="email" class="form-control" ng-disabled="true" ng-model="user.approverId" id="email" placeholder="Enter email">
+						</div>
+				  </div>
+				   <div class="form-group">
+					<label class="control-label col-sm-4" for="newemail">New ApproverId:</label>
+					<div class="col-sm-8">
+					  <input type="email" class="form-control" required ng-model="newapproverId" id="newemail" placeholder="Enter new email">
+					</div>
+				  </div>
+				  <div class="form-group"> 
+					<div class="col-sm-offset-4 col-sm-8">
+					  <button type="submit" class="btn btn-primary">Submit</button>
+					</div>
+				  </div>
+				 
+				</form>
+				</div>
+                </div>
+			<!--Approver change End-->	
+			
+                <div id="menu2" class="tab-pane fade" style="height: 353px;">
+                <h3>Cancel Approved leaves</h3>
+                <p>Under Progress.</p>
+                </div>
+                <div id="menu3" class="tab-pane fade">
+                       <div class="table-responsive col-sm-12">
+							<form class="form-inline" role="form">
+							  <div class="form-group">
+								<label for="search">History Details:</label>
+							  </div>
+						  <div class="form-group searchbox">
+							<label for="search">Search:</label>
+							<input type="text" ng-model="search" class="form-control" id="search">
+						  </div>  
+						</form>
+						  <table class="table table-bordered">
+							<thead class="theadstyle">
+								<tr>
+									<th>
+									  <a href="#" ng-click="sortType = 'type'; sortReverse = !sortReverse">
+										Leave Type
+										<span ng-show="sortType == 'type' && !sortReverse" class="fa fa-caret-down"></span>
+										<span ng-show="sortType == 'type' && sortReverse" class="fa fa-caret-up"></span>
+									  </a>
+									</th>
+									<th>
+									  <a href="#" ng-click="sortType = 'From'; sortReverse = !sortReverse">
+										 From Date 
+										<span ng-show="sortType == 'From' && !sortReverse" class="fa fa-caret-down"></span>
+										<span ng-show="sortType == 'From' && sortReverse" class="fa fa-caret-up"></span>
+									  </a>
+									</th>
+									<th>
+									  <a href="#" ng-click="sortType = 'To'; sortReverse = !sortReverse">
+										 To Date 
+										<span ng-show="sortType == 'To' && !sortReverse" class="fa fa-caret-down"></span>
+										<span ng-show="sortType == 'To' && sortReverse" class="fa fa-caret-up"></span>
+									  </a>
+									</th>
+									<th>
+									  <a href="#" ng-click="sortType = 'Days'; sortReverse = !sortReverse">
+										 Days 
+										<span ng-show="sortType == 'Days' && !sortReverse" class="fa fa-caret-down"></span>
+										<span ng-show="sortType == 'Days' && sortReverse" class="fa fa-caret-up"></span>
+									  </a>
+									</th>
+									<th>
+									  <a href="#" ng-click="sortType = 'Reason'; sortReverse = !sortReverse">
+										 Reason 
+										<span ng-show="sortType == 'Reason' && !sortReverse" class="fa fa-caret-down"></span>
+										<span ng-show="sortType == 'Reason' && sortReverse" class="fa fa-caret-up"></span>
+									  </a>
+									</th>
+									<th>
+									  <a href="#" ng-click="sortType = 'Status'; sortReverse = !sortReverse">
+										 Status 
+										<span ng-show="sortType == 'Status' && !sortReverse" class="fa fa-caret-down"></span>
+										<span ng-show="sortType == 'Status' && sortReverse" class="fa fa-caret-up"></span>
+									  </a>
+									</th>
+								</tr>
+							</thead>
+							<tbody class="tbodystyle">
+							  <tr ng-repeat="data in leaveHistory | orderBy:sortType:sortReverse | filter:paginate| filter:search">
+								  <td>{{data.type}}</td>
+								  <td>{{data.From}}</td>
+								  <td>{{data.To}}</td>
+								  <td>{{data.Days}}</td>
+								  <td>{{data.Reason}}</td>
+								  <td ng-class="{rejectedClass : data.Status=='Rejected', approvedClass : data.Status=='Approved',pendingClass : data.Status=='Pending'}">{{data.Status}}</td>   
+							  </tr>      
+							</tbody>
+						  </table>
+						  <pagination total-items="totalItems" ng-model="currentPage"  
+									 max-size="5" boundary-links="true"  
+									 items-per-page="numPerPage" class="pagination-sm pull-right">  
+							   </pagination>
+						</div> 
+                </div>
+                <!--menu4-->
+                <div id="menu4" class="tab-pane fade">
+                       <div class="table-responsive col-sm-12" style="height: 353px;">
+							<form class="form-inline" role="form">
+							  <div class="form-group">
+								<label for="search">Leave Requests:</label>
+							  </div>
+						  <div class="form-group searchbox">
+							<label for="search">Search:</label>
+							<input type="text" ng-model="search" class="form-control" id="search1">
+						  </div>  
+						</form>
+						  <table class="table table-bordered">
+							<thead class="theadstyle">
+								<tr>
+                                    <th>
+									  <a href="#" ng-click="sortType = 'type'; sortReverse = !sortReverse">
+										Employee Name
+										<span ng-show="sortType == 'type' && !sortReverse" class="fa fa-caret-down"></span>
+										<span ng-show="sortType == 'type' && sortReverse" class="fa fa-caret-up"></span>
+									  </a>
+									</th>
+									<th>
+									  <a href="#" ng-click="sortType = 'type'; sortReverse = !sortReverse">
+										Leave Type
+										<span ng-show="sortType == 'type' && !sortReverse" class="fa fa-caret-down"></span>
+										<span ng-show="sortType == 'type' && sortReverse" class="fa fa-caret-up"></span>
+									  </a>
+									</th>
+									<th>
+									  <a href="#" ng-click="sortType = 'From'; sortReverse = !sortReverse">
+										 From Date 
+										<span ng-show="sortType == 'From' && !sortReverse" class="fa fa-caret-down"></span>
+										<span ng-show="sortType == 'From' && sortReverse" class="fa fa-caret-up"></span>
+									  </a>
+									</th>
+									<th>
+									  <a href="#" ng-click="sortType = 'To'; sortReverse = !sortReverse">
+										 To Date 
+										<span ng-show="sortType == 'To' && !sortReverse" class="fa fa-caret-down"></span>
+										<span ng-show="sortType == 'To' && sortReverse" class="fa fa-caret-up"></span>
+									  </a>
+									</th>
+									<th>
+									  <a href="#" ng-click="sortType = 'Days'; sortReverse = !sortReverse">
+										 Days 
+										<span ng-show="sortType == 'Days' && !sortReverse" class="fa fa-caret-down"></span>
+										<span ng-show="sortType == 'Days' && sortReverse" class="fa fa-caret-up"></span>
+									  </a>
+									</th>
+									<th>
+									  <a href="#" ng-click="sortType = 'Reason'; sortReverse = !sortReverse">
+										 Reason 
+										<span ng-show="sortType == 'Reason' && !sortReverse" class="fa fa-caret-down"></span>
+										<span ng-show="sortType == 'Reason' && sortReverse" class="fa fa-caret-up"></span>
+									  </a>
+									</th>
+									<th>
+									  <a href="#" ng-click="sortType = 'Status'; sortReverse = !sortReverse">
+										 Action 
+										<span ng-show="sortType == 'Status' && !sortReverse" class="fa fa-caret-down"></span>
+										<span ng-show="sortType == 'Status' && sortReverse" class="fa fa-caret-up"></span>
+									  </a>
+									</th>
+								</tr>
+							</thead>
+							<tbody class="tbodystyle">
+							  <tr ng-repeat="data in leaveRequestData | orderBy:leaveRequestSortType:leaveRequestSortReverse | filter:paginate1 | filter:search1">
+								  <td>{{data.empName}}</td>
+                                  <td>{{data.type}}</td>
+								  <td>{{data.From}}</td>
+								  <td>{{data.To}}</td>
+								  <td>{{data.Days}}</td>
+								  <td>{{data.Reason}}</td>
+								  <td><button class="btn btn-sm btn-success">Approve</button> <button class="btn btn-sm btn-danger">Reject</button></td>   
+							  </tr>      
+							</tbody>
+						  </table>
+						  <pagination total-items="totalItems1" ng-model="currentPage1"  
+									 max-size="5" boundary-links="true"  
+									 items-per-page="numPerPage" class="pagination-sm pull-right">  
+							   </pagination>
+						</div> 
+                </div>
+                <div id="menu5" class="tab-pane fade">
+                       <div class="table-responsive col-sm-12" style="height: 353px;">
+							<form class="form-inline" role="form">
+							  <div class="form-group">
+								<label for="search">Cancellation Requests:</label>
+							  </div>
+						  <div class="form-group searchbox" ng-if="cancelRequestData.length > 0">
+							<label for="search">Search:</label>
+							<input type="text" ng-model="search"  class="form-control" id="search2">
+						  </div>  
+						</form>
+                        <div class="alert alert-success mt-5" ng-if="cancelRequestData.length <= 0">
+                            <strong>No Leaves Cancellation Requests</strong>
+                        </div>
+						  <table class="table table-bordered" ng-if="cancelRequestData.length > 0">
+							<thead class="theadstyle">
+								<tr>
+                                    <th>
+									  <a href="#" ng-click="sortType = 'type'; sortReverse = !sortReverse">
+										Employee Name
+										<span ng-show="sortType == 'type' && !sortReverse" class="fa fa-caret-down"></span>
+										<span ng-show="sortType == 'type' && sortReverse" class="fa fa-caret-up"></span>
+									  </a>
+									</th>
+									<th>
+									  <a href="#" ng-click="sortType = 'type'; sortReverse = !sortReverse">
+										Leave Type
+										<span ng-show="sortType == 'type' && !sortReverse" class="fa fa-caret-down"></span>
+										<span ng-show="sortType == 'type' && sortReverse" class="fa fa-caret-up"></span>
+									  </a>
+									</th>
+									<th>
+									  <a href="#" ng-click="sortType = 'From'; sortReverse = !sortReverse">
+										 From Date 
+										<span ng-show="sortType == 'From' && !sortReverse" class="fa fa-caret-down"></span>
+										<span ng-show="sortType == 'From' && sortReverse" class="fa fa-caret-up"></span>
+									  </a>
+									</th>
+									<th>
+									  <a href="#" ng-click="sortType = 'To'; sortReverse = !sortReverse">
+										 To Date 
+										<span ng-show="sortType == 'To' && !sortReverse" class="fa fa-caret-down"></span>
+										<span ng-show="sortType == 'To' && sortReverse" class="fa fa-caret-up"></span>
+									  </a>
+									</th>
+									<th>
+									  <a href="#" ng-click="sortType = 'Days'; sortReverse = !sortReverse">
+										 Days 
+										<span ng-show="sortType == 'Days' && !sortReverse" class="fa fa-caret-down"></span>
+										<span ng-show="sortType == 'Days' && sortReverse" class="fa fa-caret-up"></span>
+									  </a>
+									</th>
+									<th>
+									  <a href="#" ng-click="sortType = 'Reason'; sortReverse = !sortReverse">
+										 Reason 
+										<span ng-show="sortType == 'Reason' && !sortReverse" class="fa fa-caret-down"></span>
+										<span ng-show="sortType == 'Reason' && sortReverse" class="fa fa-caret-up"></span>
+									  </a>
+									</th>
+									<th>
+									  <a href="#" ng-click="sortType = 'Status'; sortReverse = !sortReverse">
+										 Action 
+										<span ng-show="sortType == 'Status' && !sortReverse" class="fa fa-caret-down"></span>
+										<span ng-show="sortType == 'Status' && sortReverse" class="fa fa-caret-up"></span>
+									  </a>
+									</th>
+								</tr>
+							</thead>
+							<tbody class="tbodystyle">
+							  <tr ng-repeat="data in cancelRequestData | orderBy:cancelRequestSortType:CancelRequestSortReverse | filter:paginate2 | filter:search2">
+								  <td>{{data.empName}}</td>
+                                  <td>{{data.type}}</td>
+								  <td>{{data.From}}</td>
+								  <td>{{data.To}}</td>
+								  <td>{{data.Days}}</td>
+								  <td>{{data.Reason}}</td>
+								  <td><button class="btn btn-sm btn-danger">Cancellation Approve</button></td>   
+							  </tr>      
+							</tbody>
+						  </table>
+						  <pagination ng-if="cancelRequestData.length > 0" total-items="totalItems2" ng-model="currentPage2"  
+									 max-size="5" boundary-links="true"  
+									 items-per-page="numPerPage" class="pagination-sm pull-right">  
+							   </pagination>
+						</div> 
+                </div>
+            </div>
+         </div>
+    </div>
+  </div>
+  </div>
+</div>
+<script>
+var app = angular.module('myApp', ['ui.bootstrap']);
+app.controller('myCtrl', function($scope,$timeout) {
+
+$scope.user={};
+    $scope.user.approverId="karkra.nikhil@gmail.com";
+	$scope.storeApproverId= $scope.user.approverId;
+	$scope.user.type="Sick";
+    $scope.sortType  = 'To';
+	$scope.sortReverse  = true; 
+    $scope.leaveRequestSortType="empName";
+    $scope.leaveRequestSortReverse=true;
+    $scope.cancelRequestSortType="empName";
+    $scope.cancelRequestSortReverse=true;
+	$scope.currentPage = 1;
+    $scope.currentPage1 = 1;
+    $scope.currentPage1 = 1;    
+	$scope.msgBox=false;
+     $scope.Plan=true;
+	$scope.activeFunc=function(data){
+        switch (data) {
+    case "Plan":
+          $scope.Plan=true;
+          $scope.changeApprover=false;
+          $scope.Cancel=false;
+          $scope.History=false;
+          $scope.leaveRequests=false;
+          $scope.cancelRequests=false;
+        break;
+    case "ChangeApprover":
+          $scope.Plan=false;
+          $scope.changeApprover=true;
+          $scope.Cancel=false;
+          $scope.History=false;
+          $scope.leaveRequests=false;
+          $scope.cancelRequests=false;
+        break;
+    case "Cancel":
+        $scope.Plan=false;
+          $scope.changeApprover=false;
+          $scope.Cancel=true;
+          $scope.History=false;
+          $scope.leaveRequests=false;
+          $scope.cancelRequests=false;
+        break;
+    case "History":
+       $scope.Plan=false;
+          $scope.changeApprover=false;
+          $scope.Cancel=false;
+          $scope.History=true;
+          $scope.leaveRequests=false;
+          $scope.cancelRequests=false;
+        break;
+    case "leaveRequests":
+         $scope.Plan=false;
+          $scope.changeApprover=false;
+          $scope.Cancel=false;
+          $scope.History=false;
+          $scope.leaveRequests=true;
+          $scope.cancelRequests=false;
+        break;
+    case "cancelRequests":
+         $scope.Plan=false;
+          $scope.changeApprover=false;
+          $scope.Cancel=false;
+          $scope.History=false;
+          $scope.leaveRequests=false;
+          $scope.cancelRequests=true;
+        break;
+   
+}
+    }
+	//stubbed data
+    $scope.leaveRequestData=[
+      {
+            "empName":"Nikhil Karkra",
+            "type":"Sick",
+            "From":"08/30/2016",
+            "To":"08/30/2016",
+            "Days":"1",
+            "Reason":"Health Issue"
+                      
+        },
+        {
+            "empName":"Virat Kohli",
+            "type":"Earned",
+            "From":"08/18/2016",
+            "To":"08/25/2016",
+            "Days":"8",
+            "Reason":"family Issue"
+                   
+        }
+    ]
+    $scope.leaveHistory=[
+      {
+            "type":"Sick",
+            "From":"08/30/2016",
+            "To":"08/30/2016",
+            "Days":"1",
+            "Reason":"Health Issue",
+            "Status":"Rejected"          
+        },
+        {
+            "type":"Earned",
+            "From":"08/18/2016",
+            "To":"08/25/2016",
+            "Days":"8",
+            "Reason":"family Issue",
+            "Status":"Pending"          
+        },
+        {
+            "type":"Earned",
+            "From":"12/12/2015",
+            "To":"12/15/2015",
+            "Days":"4",
+            "Reason":"Marriage",
+            "Status":"Approved"          
+        },
+        {
+            "type":"Sick",
+            "From":"06/20/2016",
+            "To":"06/21/2016",
+            "Days":"1",
+            "Reason":"Health Issue",
+            "Status":"Approved"          
+        },
+        {
+            "type":"Earned",
+            "From":"07/12/2016",
+            "To":"07/14/2016",
+            "Days":"3",
+            "Reason":"family Issue",
+            "Status":"Pending"          
+        },
+        {
+            "type":"Earned",
+            "From":"02/10/2015",
+            "To":"07/10/2015",
+            "Days":"6",
+            "Reason":"Diwali",
+            "Status":"Approved"          
+        }
+        
+    ]
+
+    $scope.cancelRequestData=[];
+	
+		//pagination funactionality
+		$scope.totalItems = $scope.leaveHistory.length;  
+		$scope.numPerPage = 5;  
+		$scope.paginate = function (value) {  
+         var begin, end, index;  
+         begin = ($scope.currentPage - 1) * $scope.numPerPage;  
+         end = begin + $scope.numPerPage;  
+         index = $scope.leaveHistory.indexOf(value);  
+         return (begin <= index && index < end);  
+       }; 
+       $scope.totalItems1 = $scope.leaveRequestData.length;
+       $scope.paginate1 = function (value) {  
+         var begin, end, index;  
+         begin = ($scope.currentPage1 - 1) * $scope.numPerPage;  
+         end = begin + $scope.numPerPage;  
+         index = $scope.leaveRequestData.indexOf(value);  
+         return (begin <= index && index < end);  
+       }; 
+	    $scope.totalItems2 = $scope.cancelRequestData.length;
+       $scope.paginate2 = function (value) {  
+         var begin, end, index;  
+         begin = ($scope.currentPage2 - 1) * $scope.numPerPage;  
+         end = begin + $scope.numPerPage;  
+         index = $scope.cancelRequestData.indexOf(value);  
+         return (begin <= index && index < end);  
+       }; 
+	   
+		//function for leave apply
+	   $scope.leaveSubmitFunc=function(data){
+			$scope.msgBox=true;
+			$scope.msgBoxData=" Applied Successfully";
+			console.log(data);
+			
+			$timeout(function () {
+				$scope.msgBox=false;
+			}, 5000);
+			
+			
+			var x=new Date(data.From);
+			var y=new Date(data.To);
+			var diffDays = (y.getDate() - x.getDate())+1; 
+			$scope.newLeaveApplied={
+				"type":data.type,
+				"From":data.From,
+				"To":data.To,
+				"Days":diffDays,
+				"Reason":data.Reason,
+				"Status":"Pending"		
+			
+			}
+			console.log($scope.newLeaveApplied);
+			$scope.leaveHistory.push($scope.newLeaveApplied);
+			$scope.user={};
+			$scope.user.approverId=$scope.storeApproverId;
+			
+		}
+		
+		//function for change approver id
+		$scope.changeApproverIdFunc=function(newId){
+			$scope.storeApproverId=newId;
+			$scope.user.approverId=newId;
+			$scope.msgBox=true;
+			$scope.msgBoxData=" Approver Changed successfully";
+			$('.nav-pills a:first').tab('show') 
+			$timeout(function () {
+				$scope.msgBox=false;
+			}, 5000);
+			
+			
+		}
+		console.log("enter");
+		//for Datepicker
+		$( "#toDate" ).datepicker({minDate: new Date() });
+		$( "#fromDate" ).datepicker({minDate: new Date() });
+});
+</script>
+
+</body>
+</html>

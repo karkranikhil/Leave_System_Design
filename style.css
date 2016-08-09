@@ -1,0 +1,171 @@
+ .navbar-default {
+        background-color: #f8f8f8;
+        border-color: #e7e7e7;
+    }
+
+.custom-navbar {
+    background-color: #0275d8 !important;
+    border-color: #0275d8 !important;
+    color: white;
+}
+
+.custom-navbar a, #navbar a:hover, #navbar > ul:hover {
+    background-color: #0275d8;
+    color: white;
+}
+.mt-5{
+    margin-top: 5%;
+}
+.mt-60px{
+    margin-top:60px;
+}
+.pd0{
+    padding:0px;
+}
+.whiteColor{
+    color:white;
+}
+.ml5{
+    margin-left: 5px;
+}
+.totalLeave{
+    background: #337ab7;
+    color: white;
+}
+.debitLeaves{
+    background: #5cb85c;
+    color: white;
+}
+.balanceLeaves{
+    background: #f0ad4e;
+    color: white;
+}
+.paternityLeaves{
+    background: #d9534f;
+    color: white;
+}
+.pdl0{
+    padding-left:15px;
+}
+.leaveNo{
+    text-align: center;
+    font-size: 35px;
+}
+.unselectedList{
+    background: #2f2f2f;
+       
+}
+.unselectedList>a{
+     line-height: 22px;
+    padding: 0;
+    color: white;
+    font-size: 16px;
+}
+.leaveTypeLabel{
+        padding: 7px 0px;
+}
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover{
+    color: black;
+    background-color: #ccc;
+    border: 1px solid #2f2f2f;
+    border-radius: 0;
+    font-weight: bold;
+}
+.nav>li>a:focus, .nav>li>a:hover{
+        text-decoration: none;
+    background-color: #eee;
+    color: black;
+    border: 1px solid #2f2f2f;
+    border-radius: 0px;
+}
+.nav>li>a {
+    position: relative;
+    display: block;
+    padding: 4px 15px;
+}
+.tab-content-style{
+   
+    margin-left: -15px;
+    /*width:110%;
+     background: #ccc;*/
+     margin-top:2%;
+}
+.dataTable th.sorting {
+    color: #007aff;
+    cursor: pointer;
+    position: relative;
+}
+.cardFont{
+    font-size:1.5em;
+
+}
+.custom-nav{
+        height: 70vh;
+    background: #eee;
+}
+.pdl-30{
+    padding-left:30px;
+}
+.mt-7{
+    margin-top:7%;
+}
+.tabPanel{
+    border: 1px solid #ccc;
+    background: #eee;
+}
+.pt7{
+    padding-top: 7px;
+}
+.theadstyle{
+    background: #0275d8;
+color: white;
+}
+.theadstyle>tr>th>a{
+    color:white;
+	   
+}
+.tbodystyle>tr{
+	    background: white !important;
+}
+.approvedClass{
+    background: #4CAF50;
+    color: white;
+}
+.rejectedClass{
+    background: rgba(255, 0, 0, 0.7);
+    color: white;
+}
+.pendingClass{
+    background: rgba(255, 141, 0, 0.7);
+    color: white;
+}
+.searchbox{
+        float: right;
+        margin-bottom: 5px !important;
+}
+.fixedlist,.fixedlist>a:hover,.fixedlist>a:focus{
+    background: #0275d8 !important;
+    color: white !important;
+}
+.fontSize1-5{
+     font-size: 1.4em;
+}
+.chavronStyle{
+        float: right;
+    margin-top: 3%;
+}
+.arrow-right {
+  width: 0; 
+  height: 0; 
+  border-top: 16px solid transparent;
+  border-bottom: 16px solid transparent;
+  
+  border-left: 16px solid #2f2f2f;
+}
+.applyCaret{
+        position: absolute;
+    /* top: 40px; */
+    z-index: 99;
+    right: -16px;
+    top: 0px;
+}
